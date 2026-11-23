@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/Principal.css">
+    <title>pombo-tech - Página Inicial</title>
+</head>
+<body>
+
+    <a href="#conteudo" class="pular-conteudo">Pular para o conteúdo</a>
+
+    <header class="topo">
+        <a href="Principal.html" class="topo-logo">
+            <img src="../img/Logo.png" alt="pombo-tech, página inicial">
+        </a>
+
+        <form class="busca" role="search" action="#produtos" method="get">
+            <input type="search" name="q" placeholder="Pesquisar..." aria-label="Pesquisar produtos">
+            <button type="submit" class="icone-botao" aria-label="Pesquisar">
+                <img src="../img/Lupa.png" alt="">
+            </button>
+        </form>
+
+        <nav class="topo-acoes" aria-label="Conta e carrinho">
+            <a href="login.html" class="icone-botao" aria-label="Entrar na conta">
+                <img src="../img/Login.png" alt="">
+            </a>
+            <a href="Carrinho.html" class="icone-botao" aria-label="Carrinho de compras">
+                <img src="../img/Carrinho.png" alt="">
+            </a>
+        </nav>
+    </header>
+
+    <main id="conteudo">
+
+        <section class="hero">
+            <div class="hero-conteudo">
+                <p class="hero-etiqueta">Periféricos e eletrônicos usados</p>
+                <h1>Seu novo PC<br>começa aqui</h1>
+                <p class="hero-texto">Uma plataforma confiável, rápida e intuitiva para comprar o que você precisa. Crie sua conta hoje mesmo e comece a usar gratuitamente.</p>
+
+                <div class="hero-botoes">
+                    <a href="Cadastro.html" class="btn-principal">Começar agora</a>
+                    <a href="#produtos" class="btn-secundario">Ver produtos</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="produtos" class="produtos">
+            <div class="titulo-secao">
+                <h2>Produtos em destaque</h2>
+                <p>Usados e novos, escolhidos com cuidado.</p>
+            </div>
+
+            <div class="filtros" role="group" aria-label="Filtrar produtos">
+                <button type="button" class="filtro ativo" data-filtro="todos">Todos</button>
+                <button type="button" class="filtro" data-filtro="usado">Usados</button>
+                <button type="button" class="filtro" data-filtro="novo">Novos</button>
+            </div>
+
+            <div class="carrossel">
+                <button type="button" class="seta" id="seta-esq" aria-label="Produtos anteriores">‹</button>
+                <div class="trilho" id="trilho-produtos"></div>
+                <button type="button" class="seta" id="seta-dir" aria-label="Próximos produtos">›</button>
+            </div>
+        </section>
+
+        <section id="recursos" class="recursos">
+            <div class="titulo-secao">
+                <h2>Por que nos escolher?</h2>
+                <p>As principais vantagens da nossa plataforma.</p>
+            </div>
+
+            <div class="recursos-grid">
+                <div class="card">
+                    <div class="icone" aria-hidden="true">♿</div>
+                    <h3>Acessibilidade</h3>
+                    <p>Pensamos em cada pessoa: um site para todos usarem, com facilidade e sem barreiras.</p>
+                </div>
+                <div class="card">
+                    <div class="icone" aria-hidden="true">🔒</div>
+                    <h3>Segurança máxima</h3>
+                    <p>Seus dados são protegidos com criptografia de ponta a ponta.</p>
+                </div>
+                <div class="card">
+                    <div class="icone" aria-hidden="true">🎨</div>
+                    <h3>Fácil de usar</h3>
+                    <p>Interface moderna e limpa, pensada na melhor experiência para você.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre" class="sobre">
+            <div class="sobre-conteudo">
+                <h2>Sobre a pombo-tech</h2>
+                <p>Nascemos com a missão de simplificar processos complexos. Acreditamos que a tecnologia deve trabalhar para você, e não o contrário. Nossa equipe foca em entregar código limpo, design elegante e suporte de verdade.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="rodape">
+        <p>&copy; 2026 pombo-tech. Todos os direitos reservados.</p>
+        <div class="links-rodape">
+            <a href="#">Privacidade</a>
+            <a href="#">Termos de Uso</a>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/carrossel.js"></script>
+
+</body>
+</html>

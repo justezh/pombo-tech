@@ -1,0 +1,142 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #4d4b4d;
+    font-family: 'Times New Roman', Times, serif;
+    color: rgb(251, 250, 249);
+}
+
+/* Topo */
+.cabecalho {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(190, 9, 187);
+    height: 105px;
+}
+
+.cabecalho img {
+    height: 80px;
+    width: auto;
+    display: block;
+}
+
+/* Conteúdo */
+.container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 15px;
+}
+
+.cartao {
+    width: 100%;
+    max-width: 420px;
+    background-color: #3a383a;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.cartao h1 {
+    margin: 0 0 25px;
+    text-align: center;
+    color: rgb(179, 91, 209);
+    font-size: 32px;
+}
+
+/* Campos */
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.campo label {
+    margin-bottom: 6px;
+    font-size: 18px;
+}
+
+.campo input {
+    padding: 12px;
+    border-radius: 10px;
+    border: 2px solid rgb(0, 0, 0);
+    font-size: 16px;
+}
+
+.campo input:focus {
+    outline: none;
+    border-color: rgb(179, 91, 209);
+}
+
+/* Mostrar senha e esqueci a senha */
+.opcoes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.mostrar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.opcoes a,
+.link-cadastro a {
+    color: rgb(220, 150, 240);
+}
+
+/* Mensagem de erro */
+.mensagem {
+    min-height: 22px;
+    margin: 0 0 10px;
+    text-align: center;
+    color: rgb(255, 150, 150);
+}
+
+/* Botão */
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 120px;
+    background-color: rgb(179, 91, 209);
+    color: rgb(251, 250, 249);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgb(142, 10, 136);
+}
+
+.link-cadastro {
+    margin: 20px 0 0;
+    text-align: center;
+}
+
+/* Rodapé */
+.rodape {
+    text-align: center;
+    padding: 20px;
+    background-color: rgb(190, 9, 187);
+    color: white;
+}
+
+.rodape p {
+    margin: 0;
+}

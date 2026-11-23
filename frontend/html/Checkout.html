@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/Checkout.css">
+    <title>pombo-tech - Finalizar compra</title>
+</head>
+<body>
+
+    <header class="cabecalho">
+        <a href="Principal.html">
+            <img src="../img/Logo.png" alt="Logo da pombo-tech">
+        </a>
+    </header>
+
+    <main class="container">
+        <h1>Finalizar compra</h1>
+
+        <div id="vazio" class="aviso-vazio" hidden>
+            <p>Seu carrinho está vazio.</p>
+            <a href="Principal.html" class="btn-secundario">Voltar às compras</a>
+        </div>
+
+        <div id="sucesso" class="aviso-vazio" hidden>
+            <h2>Pedido realizado!</h2>
+            <p id="msg-sucesso"></p>
+            <a href="Principal.html" class="btn-secundario">Voltar à página inicial</a>
+        </div>
+
+        <form id="form-checkout" class="checkout-layout" novalidate>
+
+            <div class="dados">
+                <section class="bloco">
+                    <h2>Dados pessoais</h2>
+
+                    <div class="campo">
+                        <label for="nome">Nome completo</label>
+                        <input type="text" id="nome" name="nome" autocomplete="name" required>
+                    </div>
+
+                    <div class="linha-campos">
+                        <div class="campo">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" autocomplete="email" required>
+                        </div>
+                        <div class="campo">
+                            <label for="telefone">Telefone</label>
+                            <input type="tel" id="telefone" name="telefone" autocomplete="tel" placeholder="(11) 91234-5678" required>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bloco">
+                    <h2>Endereço de entrega</h2>
+
+                    <div class="linha-campos">
+                        <div class="campo">
+                            <label for="cep">CEP</label>
+                            <input type="text" id="cep" name="cep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="postal-code" required>
+                        </div>
+                        <div class="campo">
+                            <label for="estado">Estado (UF)</label>
+                            <input type="text" id="estado" name="estado" maxlength="2" autocomplete="address-level1" required>
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="rua">Rua</label>
+                        <input type="text" id="rua" name="rua" autocomplete="address-line1" required>
+                    </div>
+
+                    <div class="linha-campos">
+                        <div class="campo">
+                            <label for="numero">Número</label>
+                            <input type="text" id="numero" name="numero" required>
+                        </div>
+                        <div class="campo">
+                            <label for="complemento">Complemento</label>
+                            <input type="text" id="complemento" name="complemento" autocomplete="address-line2">
+                        </div>
+                    </div>
+
+                    <div class="linha-campos">
+                        <div class="campo">
+                            <label for="bairro">Bairro</label>
+                            <input type="text" id="bairro" name="bairro" required>
+                        </div>
+                        <div class="campo">
+                            <label for="cidade">Cidade</label>
+                            <input type="text" id="cidade" name="cidade" autocomplete="address-level2" required>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bloco">
+                    <h2>Forma de pagamento</h2>
+
+                    <label class="opcao">
+                        <input type="radio" name="pagamento" value="pix" checked>
+                        <span>Pix</span>
+                    </label>
+                    <label class="opcao">
+                        <input type="radio" name="pagamento" value="cartao">
+                        <span>Cartão de crédito</span>
+                    </label>
+                    <label class="opcao">
+                        <input type="radio" name="pagamento" value="boleto">
+                        <span>Boleto</span>
+                    </label>
+
+                    <p class="nota">Os dados do cartão são digitados no ambiente seguro do serviço de pagamento, nunca nesta página.</p>
+                </section>
+            </div>
+
+            <aside class="resumo">
+                <h2>Resumo do pedido</h2>
+
+                <div id="itens-resumo" class="itens-resumo"></div>
+
+                <div class="linha">
+                    <span>Subtotal</span>
+                    <span id="subtotal">R$ 0,00</span>
+                </div>
+                <div class="linha">
+                    <span>Frete</span>
+                    <span id="frete">R$ 0,00</span>
+                </div>
+                <div class="linha total">
+                    <span>Total</span>
+                    <span id="total">R$ 0,00</span>
+                </div>
+
+                <p id="mensagem" class="mensagem" role="alert"></p>
+
+                <button type="submit" id="btn-confirmar" class="btn-principal">Confirmar pedido</button>
+                <a href="Carrinho.html" class="btn-secundario">Voltar ao carrinho</a>
+            </aside>
+        </form>
+    </main>
+
+    <footer class="rodape">
+        <p>&copy; 2026 pombo-tech. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        const CHAVE = 'carrinho';
+        const FRETE = 0; // valor fixo provisório; o cálculo real vem do back-end
+        const moeda = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+
+        const form = document.getElementById('form-checkout');
+        const blocoVazio = document.getElementById('vazio');
+        const blocoSucesso = document.getElementById('sucesso');
+        const msgSucesso = document.getElementById('msg-sucesso');
+        const itensResumo = document.getElementById('itens-resumo');
+        const mensagem = document.getElementById('mensagem');
+
+        function lerCarrinho() {
+            try {
+                const dados = JSON.parse(localStorage.getItem(CHAVE));
+                return Array.isArray(dados) ? dados : [];
+            } catch (erro) {
+                return [];
+            }
+        }
+
+        const carrinho = lerCarrinho();
+
+        function criar(tag, classe, texto) {
+            const el = document.createElement(tag);
+            if (classe) el.className = classe;
+            if (texto !== undefined) el.textContent = texto;
+            return el;
+        }
+
+        function desenharResumo() {
+            if (carrinho.length === 0) {
+                form.hidden = true;
+                blocoVazio.hidden = false;
+                return;
+            }
+
+            carrinho.forEach(item => {
+                const linha = criar('div', 'item-resumo');
+                linha.append(
+                    criar('span', '', item.qtd + 'x ' + item.nome),
+                    criar('span', '', moeda.format(item.preco * item.qtd))
+                );
+                itensResumo.appendChild(linha);
+            });
+
+            const subtotal = carrinho.reduce((soma, i) => soma + i.preco * i.qtd, 0);
+            document.getElementById('subtotal').textContent = moeda.format(subtotal);
+            document.getElementById('frete').textContent = moeda.format(FRETE);
+            document.getElementById('total').textContent = moeda.format(subtotal + FRETE);
+        }
+
+        // Máscara do CEP e preenchimento automático pelo ViaCEP
+        const campoCep = document.getElementById('cep');
+
+        campoCep.addEventListener('input', function () {
+            let n = campoCep.value.replace(/\D/g, '').slice(0, 8);
+            if (n.length > 5) n = n.slice(0, 5) + '-' + n.slice(5);
+            campoCep.value = n;
+        });
+
+        campoCep.addEventListener('blur', async function () {
+            const cep = campoCep.value.replace(/\D/g, '');
+            if (cep.length !== 8) return;
+
+            try {
+                const resposta = await fetch('https://viacep.com.br/ws/' + cep + '/json/');
+                const dados = await resposta.json();
+                if (dados.erro) return;
+
+                document.getElementById('rua').value = dados.logradouro || '';
+                document.getElementById('bairro').value = dados.bairro || '';
+                document.getElementById('cidade').value = dados.localidade || '';
+                document.getElementById('estado').value = dados.uf || '';
+                document.getElementById('numero').focus();
+            } catch (erro) {
+                // Sem internet ou serviço fora do ar: a pessoa preenche à mão.
+            }
+        });
+
+        form.addEventListener('submit', function (evento) {
+            evento.preventDefault();
+            mensagem.textContent = '';
+
+            if (!form.checkValidity()) {
+                mensagem.textContent = 'Preencha todos os campos obrigatórios.';
+                form.reportValidity();
+                return;
+            }
+
+            const dados = Object.fromEntries(new FormData(form));
+            const forma = { pix: 'Pix', cartao: 'cartão de crédito', boleto: 'boleto' }[dados.pagamento];
+
+            // Aqui entra o envio do pedido ao servidor quando houver back-end.
+            // O servidor deve recalcular o total com os preços reais antes de cobrar.
+
+            try {
+                localStorage.removeItem(CHAVE);
+            } catch (erro) {
+                console.error('Não foi possível limpar o carrinho:', erro);
+            }
+
+            form.hidden = true;
+            msgSucesso.textContent = 'Obrigado, ' + dados.nome + '! Pagamento por ' + forma + ' (simulação).';
+            blocoSucesso.hidden = false;
+        });
+
+        desenharResumo();
+    </script>
+
+</body>
+</html>

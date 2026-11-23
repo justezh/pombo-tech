@@ -1,0 +1,127 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #dbdadb;
+    font-family: 'Times New Roman', Times, serif;
+    color: rgb(251, 250, 249);
+}
+
+/* Topo */
+.cabecalho {
+    background-color: rgb(190, 9, 187);
+    text-align: center;
+    padding: 20px;
+}
+
+.cabecalho a {
+    color: white;
+    text-decoration: none;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* Conteúdo */
+.container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 15px;
+}
+
+.cartao {
+    width: 100%;
+    max-width: 460px;
+    background-color: #3a383a;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.cartao h1 {
+    margin: 0 0 25px;
+    text-align: center;
+    color: rgb(179, 91, 209);
+    font-size: 32px;
+}
+
+/* Campos */
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.campo label {
+    margin-bottom: 6px;
+    font-size: 18px;
+}
+
+.campo input {
+    padding: 12px;
+    border-radius: 10px;
+    border: 2px solid rgb(0, 0, 0);
+    font-size: 16px;
+}
+
+.campo input:focus {
+    outline: none;
+    border-color: rgb(179, 91, 209);
+}
+
+.campo small {
+    margin-top: 5px;
+    color: rgb(200, 200, 200);
+}
+
+/* Mensagem de erro */
+.mensagem {
+    min-height: 22px;
+    margin: 0 0 10px;
+    text-align: center;
+    color: rgb(255, 150, 150);
+}
+
+/* Botão */
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 120px;
+    background-color: rgb(179, 91, 209);
+    color: rgb(251, 250, 249);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgb(236, 231, 235);
+}
+
+.link-login {
+    margin: 20px 0 0;
+    text-align: center;
+}
+
+.link-login a {
+    color: rgb(220, 150, 240);
+}
+
+/* Rodapé */
+.rodape {
+    text-align: center;
+    padding: 20px;
+    background-color: rgb(190, 9, 187);
+    color: white;
+}
+
+.rodape p {
+    margin: 0;
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/Cadastro.css">
+    <title>pombo-tech - Cadastro</title>
+</head>
+<body>
+
+    <header class="cabecalho">
+        <a href="Principal.html">pombo-tech</a>
+    </header>
+
+    <main class="container">
+        <form id="form-cadastro" class="cartao" novalidate>
+            <h1>Criar conta</h1>
+
+            <div class="campo">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" autocomplete="name" required>
+            </div>
+
+            <div class="campo">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" autocomplete="email" required>
+            </div>
+
+            <div class="campo">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" minlength="8" autocomplete="new-password" required>
+                <small>Mínimo de 8 caracteres.</small>
+            </div>
+
+            <div class="campo">
+                <label for="confirmar_senha">Confirmar senha</label>
+                <input type="password" id="confirmar_senha" name="confirmar_senha" autocomplete="new-password" required>
+            </div>
+
+            <p id="mensagem" class="mensagem" role="alert"></p>
+
+            <button type="submit" id="Cadastrar">Cadastrar</button>
+
+            <p class="link-login">Já tem conta? <a href="login.html">Entrar</a></p>
+        </form>
+    </main>
+
+    <footer class="rodape">
+        <p>&copy; 2026 pombo-tech. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        const form = document.getElementById('form-cadastro');
+        const mensagem = document.getElementById('mensagem');
+
+        form.addEventListener('submit', function (evento) {
+            evento.preventDefault();
+            mensagem.textContent = '';
+
+            if (!form.checkValidity()) {
+                mensagem.textContent = 'Preencha todos os campos corretamente.';
+                return;
+            }
+
+            const senha = document.getElementById('senha').value;
+            const confirmar = document.getElementById('confirmar_senha').value;
+
+            if (senha !== confirmar) {
+                mensagem.textContent = 'As senhas não coincidem.';
+                return;
+            }
+
+            // Aqui entra o envio para o servidor quando houver back-end.
+            mensagem.textContent = 'Cadastro válido!';
+        });
+    </script>
+
+</body>

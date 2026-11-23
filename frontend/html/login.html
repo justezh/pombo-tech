@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/Login.css">
+    <title>pombo-tech - Login</title>
+</head>
+<body>
+
+    <header class="cabecalho">
+        <a href="Principal.html">
+            <img src="../img/Logo.png" alt="Logo da pombo-tech">
+        </a>
+    </header>
+
+    <main class="container">
+        <form id="form-login" class="cartao" novalidate>
+            <h1>Entrar</h1>
+
+            <div class="campo">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" autocomplete="email" required>
+            </div>
+
+            <div class="campo">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" autocomplete="current-password" required>
+            </div>
+
+            <div class="opcoes">
+                <label class="mostrar">
+                    <input type="checkbox" id="mostrar-senha"> Mostrar senha
+                </label>
+                <a href="#">Esqueci minha senha</a>
+            </div>
+
+            <p id="mensagem" class="mensagem" role="alert"></p>
+
+            <button type="submit" id="Entrar">Entrar</button>
+
+            <p class="link-cadastro">Não tem conta? <a href="Cadastro.html">Cadastre-se</a></p>
+        </form>
+    </main>
+
+    <footer class="rodape">
+        <p>&copy; 2026 pombo-tech. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        const form = document.getElementById('form-login');
+        const campoSenha = document.getElementById('senha');
+        const mostrarSenha = document.getElementById('mostrar-senha');
+        const mensagem = document.getElementById('mensagem');
+
+        mostrarSenha.addEventListener('change', function () {
+            campoSenha.type = mostrarSenha.checked ? 'text' : 'password';
+        });
+
+        form.addEventListener('submit', function (evento) {
+            evento.preventDefault();
+            mensagem.textContent = '';
+
+            if (!form.checkValidity()) {
+                mensagem.textContent = 'Informe um e-mail válido e a sua senha.';
+                return;
+            }
+
+            // Aqui entra o envio para o servidor quando houver back-end.
+            // O servidor confere e-mail e senha e responde se o login é válido.
+            mensagem.textContent = 'Dados válidos! (falta ligar ao servidor)';
+        });
+    </script>
+
+</body>
+</html>

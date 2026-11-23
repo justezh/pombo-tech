@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/Carrinho.css">
+    <title>pombo-tech - Carrinho</title>
+</head>
+
+<body>
+
+    <header class="cabecalho">
+        <a href="Principal.html">
+            <img src="../img/Logo.png" alt="Logo da pombo-tech">
+        </a>
+    </header>
+
+    <main class="container">
+        <h1>Meu carrinho</h1>
+
+        <div class="carrinho-layout">
+            <section id="lista-carrinho" class="lista" aria-label="Itens do carrinho"></section>
+
+            <aside class="resumo">
+                <h2>Resumo</h2>
+                <div class="linha">
+                    <span>Itens</span>
+                    <span id="total-itens">0</span>
+                </div>
+                <div class="linha total">
+                    <span>Total</span>
+                    <span id="total-valor">R$ 0,00</span>
+                </div>
+                <button type="button" id="btn-finalizar" class="btn-principal">Finalizar compra</button>
+                <a href="Principal.html" class="btn-secundario">Continuar comprando</a>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="rodape">
+        <p>&copy; 2026 pombo-tech. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        const CHAVE = 'carrinho';
+        const moeda = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+
+        const lista = document.getElementById('lista-carrinho');
+        const totalItens = document.getElementById('total-itens');
+        const totalValor = document.getElementById('total-valor');
+        const btnFinalizar = document.getElementById('btn-finalizar');
+
+        function lerCarrinho() {
+            try {
+                const dados = JSON.parse(localStorage.getItem(CHAVE));
+                return Array.isArray(dados) ? dados : null;
+            } catch (erro) {
+                return null;
+            }
+        }
+
+        function salvarCarrinho(itens) {
+            try {
+                localStorage.setItem(CHAVE, JSON.stringify(itens));
+            } catch (erro) {
+                console.error('Não foi possível salvar o carrinho:', erro);
+            }
+        }
+
+        // Itens de exemplo, só para testar. Apague este bloco quando
+        // as páginas de produto estiverem adicionando itens de verdade.
+        let carrinho = lerCarrinho();
+        if (carrinho === null) {
+            carrinho = [
+                { id: 'mouse-gamer', nome: 'Mouse Gamer (usado)', preco: 89.9, qtd: 1 },
+                { id: 'teclado-mec', nome: 'Teclado Mecânico (usado)', preco: 159.0, qtd: 1 }
+            ];
+            salvarCarrinho(carrinho);
+        }
+
+        function criar(tag, classe, texto) {
+            const el = document.createElement(tag);
+            if (classe) el.className = classe;
+            if (texto !== undefined) el.textContent = texto;
+            return el;
+        }
+
+        function alterarQuantidade(id, delta) {
+            const item = carrinho.find(i => i.id === id);
+            if (!item) return;
+            item.qtd = Math.max(1, item.qtd + delta);
+            salvarCarrinho(carrinho);
+            desenhar();
+        }
+
+        function removerItem(id) {
+            carrinho = carrinho.filter(i => i.id !== id);
+            salvarCarrinho(carrinho);
+            desenhar();
+        }
+
+        function desenhar() {
+            lista.replaceChildren();
+
+            if (carrinho.length === 0) {
+                lista.appendChild(criar('p', 'vazio', 'Seu carrinho está vazio.'));
+                totalItens.textContent = '0';
+                totalValor.textContent = moeda.format(0);
+                btnFinalizar.disabled = true;
+                return;
+            }
+
+            btnFinalizar.disabled = false;
+
+            carrinho.forEach(item => {
+                const linha = criar('article', 'item');
+
+                const info = criar('div', 'item-info');
+                info.appendChild(criar('h3', '', item.nome));
+                info.appendChild(criar('p', 'preco', moeda.format(item.preco)));
+
+                const qtd = criar('div', 'item-qtd');
+                const menos = criar('button', 'btn-qtd', '−');
+                menos.type = 'button';
+                menos.setAttribute('aria-label', 'Diminuir quantidade');
+                menos.addEventListener('click', () => alterarQuantidade(item.id, -1));
+
+                const mais = criar('button', 'btn-qtd', '+');
+                mais.type = 'button';
+                mais.setAttribute('aria-label', 'Aumentar quantidade');
+                mais.addEventListener('click', () => alterarQuantidade(item.id, 1));
+
+                qtd.append(menos, criar('span', 'qtd-valor', String(item.qtd)), mais);
+
+                const subtotal = criar('p', 'subtotal', moeda.format(item.preco * item.qtd));
+
+                const remover = criar('button', 'btn-remover', 'Remover');
+                remover.type = 'button';
+                remover.addEventListener('click', () => removerItem(item.id));
+
+                linha.append(info, qtd, subtotal, remover);
+                lista.appendChild(linha);
+            });
+
+            const itens = carrinho.reduce((soma, i) => soma + i.qtd, 0);
+            const total = carrinho.reduce((soma, i) => soma + i.preco * i.qtd, 0);
+            totalItens.textContent = String(itens);
+            totalValor.textContent = moeda.format(total);
+        }
+
+        btnFinalizar.addEventListener('click', () => {
+            window.location.href = 'Checkout.html';
+        });
+
+        desenhar();
+    </script>
+
+</body>
+
+</html>
